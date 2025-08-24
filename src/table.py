@@ -6,7 +6,7 @@
 
 import numpy, os
 from typing import Union
-from src import null, misc
+import null, misc
 
 class Table:
 	_dispWidth = 100 # Default display width
@@ -1298,7 +1298,7 @@ class Table:
 		Formats a table to print to console.
 		@return	{string}	A q-like representation of the table.
 		"""
-		m, n = Table.getDispSize()
+		m, n = Table.getDispSize() # m=width, n=height
 
 		# Build table as a matrix of strings.
 		table = [] # Init
@@ -1330,14 +1330,15 @@ class Table:
 				max([len(table[i][j]) for i in range(len(table))])) # Max width + " " (+ "|" for last key col)
 
 		if sum(width) > m: # If too wide, we'll have to drop some columns
-			nCols = 1 # Always display at least one
 			cumWidth = width[0] # Cumulative width
 
 			for i in range(1, len(table[0])):
 				cumWidth += width[i]
 
-				if cumWidth > n - 2:
+				if cumWidth > m - 2:
 					break # Can't fit anymore
+
+			nCols = i # How many columns we managed to fit
 
 			for i in range(len(table)):
 				table[i] = table[i][:nCols] # Trim columns we can't display
