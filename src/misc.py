@@ -173,3 +173,55 @@ def remove(a:list, b:Union[any,list]) -> list:
 	@return		{list}		a - b.
 	"""
 	return list(set(a).difference(set(mkList(b))))
+
+def first(x:[list,tuple,numpy.ndarray]):
+	"""
+	Returns the first element of the list.
+	@param x	{list|tuple|array}	List.
+	@return		{any}				First element of the list.
+	"""
+	return x[0]
+
+def last(x:[list,tuple,numpy.ndarray]):
+	"""
+	Returns the last element of the list.
+	@param x	{list|tuple|array}	List.
+	@return		{any}				Last element of the list.
+	"""
+	return x[-1]
+
+def find(x:[list,tuple,numpy.ndarray], y) -> int:
+	"""
+	Finds the index of the first occurrence of an element in a list, or -1 if none.
+	@param x	{list|tuple|array}	List to search.
+	@param y	{any}				Item to search.
+	@return		{int}				Index of the first of occurrence of y in x.
+	"""
+	for i in range(len(x)):
+		if x[i] == y: return i
+
+	return -1
+
+def within(x, y: list) -> [bool,tuple,numpy.ndarray]:
+	"""
+	Determines if x is within y.
+	@param x	{atom|vector}	Item(s) to test.
+	@param y	{list[2]}		Two-element list.
+	@return		{bool|vector}	True if within, false otherwise. Shape matches x.
+	"""
+	if type(x) in [list, tuple, numpy.ndarray]:
+		res = [_within(i, y) for i in x]
+		if type(x) == tuple: return tuple(res)
+		if type(x) == numpy.ndarray: return numpy.array(res)
+		return res
+
+	return _within(x, y)
+
+def _within(x, y:list) -> bool:
+	"""
+	Determines if x is within y.
+	@param x	{atom}		Item to test.
+	@param y	{list[2]}	Two-element list.
+	@return		{bool}		True if x is within y.
+	"""
+	return y[0] <= x and x <= y[1]
