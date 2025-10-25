@@ -225,3 +225,18 @@ def _within(x, y:list) -> bool:
 	@return		{bool}		True if x is within y.
 	"""
 	return y[0] <= x and x <= y[1]
+
+def vand(x:Union[list,numpy.ndarray], y:Union[list, numpy.ndarray]) -> numpy.ndarray:
+	if len(x) != len(y):
+		raise Exception("length")
+
+	return numpy.array([x[i] and y[i] for i in range(len(x))])
+
+def vor(x:Union[list,numpy.ndarray], y:Union[list, numpy.ndarray]) -> numpy.ndarray:
+	if len(x) != len(y):
+		raise Exception("length")
+
+	return numpy.array([x[i] or y[i] for i in range(len(x))])
+
+def vin(x:Union[list,numpy.ndarray], y:Union[list, numpy.ndarray]) -> numpy.ndarray:
+	return numpy.array([x[i] in y for i in range(len(x))])
