@@ -228,3 +228,30 @@ def _within(x, y:list) -> bool:
 
 def vin(x:Union[list,numpy.ndarray], y:Union[list, numpy.ndarray]) -> numpy.ndarray:
 	return numpy.array([x[i] in y for i in range(len(x))])
+
+def avg(x:Union[list,numpy.ndarray]) -> float:
+	"""
+	Essentially a wrapper around numpy.mean, but don't be a bitch when given an empty array.
+	@param x	{list|array}	Array.
+	@return		{float}			Average.
+	"""
+	if len(x) == 0: return numpy.nan
+	if type(x) == list: return numpy.array(x).mean()
+	if type(x) == numpy.ndarray: return x.mean()
+	# Else, presumably an atom.
+	return float(x)
+
+def max(x:Union[list,numpy.ndarray]) -> float:
+	"""
+	Essentially a wrapper around numpy.max, but don't be a bitch when given an empty array.
+	@param x	{list|array}	Array.
+	@return		{float}			Max.
+	"""
+	if len(x) == 0: return numpy.nan ##! Support for different types
+	if type(x) == list: return numpy.array(x).max()
+	if type(x) == numpy.ndarray: return x.max()
+	# Else, presumably an atom.
+	return float(x) ##! Support for different types
+
+def fill(x:Union[list,numpy.ndarray], val:object) -> numpy.ndarray:
+	return numpy.array([val if numpy.isnan(y) else y for y in x]) ##! Support for other types
