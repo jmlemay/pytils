@@ -190,13 +190,16 @@ def last(x:[list,tuple,numpy.ndarray]):
 	"""
 	return x[-1]
 
-def find(x:[list,tuple,numpy.ndarray], y) -> int:
+def find(x:[list,tuple,numpy.ndarray], y, reverse:bool=False) -> int:
 	"""
 	Finds the index of the first occurrence of an element in a list, or -1 if none.
 	@param x	{list|tuple|array}	List to search.
 	@param y	{any}				Item to search.
 	@return		{int}				Index of the first of occurrence of y in x.
 	"""
+	rng = range(len(x))
+	if reverse: rng = rng[::-1]
+
 	for i in range(len(x)):
 		if x[i] == y: return i
 
@@ -228,6 +231,11 @@ def _within(x, y:list) -> bool:
 
 def vin(x:Union[list,numpy.ndarray], y:Union[list, numpy.ndarray]) -> numpy.ndarray:
 	return numpy.array([x[i] in y for i in range(len(x))])
+
+# Only used on frozensettable lists.
+def fin(x, y) -> numpy.ndarray:
+	yset = {frozenset(d.items()) for d in y}
+	return numpy.array([frozenset(d.items()) in yset for d in x])
 
 def avg(x:Union[list,numpy.ndarray]) -> float:
 	"""
